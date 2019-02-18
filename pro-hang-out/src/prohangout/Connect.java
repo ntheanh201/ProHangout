@@ -9,10 +9,10 @@ public class Connect {
     // Kết nối vào MySQL.
     public static Connection getMySQLConnection() throws SQLException,
             ClassNotFoundException {
-        String hostName = "172.104.63.169";
-        String dbName = "prohangout";
-        String userName = "root";
-        String password = "theanh";
+        String hostName = "xxx";
+        String dbName = "xxx";
+        String userName = "xxx";
+        String password = "xxx";
         return getMySQLConnection(hostName, dbName, userName, password);
     }
 
