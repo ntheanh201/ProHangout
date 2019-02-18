@@ -1,4 +1,3 @@
-# ProHangoutServer
 Tên ứng dụng: ProHangout.
 
 Mô tả về sản phẩm:
@@ -17,3 +16,5 @@ o	Thay đổi avatar của tài khoản, avatar của từng user sẽ được 
 o	Mở thư mục ProHangout/dist và chạy file ProHangout.jar.
 o	Đăng ký tài khoản -> Đăng nhập -> Chat :v. Khi chat xong mọi người hãy chat: /quit để người trong phòng biết được bạn đã thoát và để server hoạt động đúng như mong muốn, tránh tình trạng tắt đột ngột T.T
 o	Để tìm kiếm bạn bè trong phòng chat, sử dụng: http://s2bzen.me
+##For Developers
+(Sẽ được update trong thời gian sớm nhất để mọi người có thể tự tạo server local hoặc upload lên host sử dụng như 1 máy chủ)
