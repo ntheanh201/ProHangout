@@ -10,7 +10,7 @@ Mô tả về sản phẩm:
 -	Ứng dụng áp dụng công nghệ Socket giúp cho việc nhắn tin giữa các user được realtime (phản hồi lại ngay lập tức khi có tin nhắn đến), upload avatar của từng user lên server. Thêm thư viện JDBC Connector để kết nối tới hệ thống database lưu trữ thông tin về tài khoản, mật khẩu giúp cho việc định danh mỗi người khi kết nối tới ProHangout.
 -	Các tính năng chính:
 
-    o	Đăng nhập, đăng kí tài khoản.
+    o	Đăng nhập, đăng kí tài khoản. Vì Server cá nhân của mình khá cùi nên nếu bạn gặp vấn đề như Đăng nhập/Đăng kí không thấy phản hồi lại. Hãy inbox fb: fb.com/ntheanh201. Cảm ơn ^^
 
     o	Trò chuyện, có thể trò chuyện dùng tiếng Anh hoặc tiếng Việt mà không bị lỗi font chữ.
 
