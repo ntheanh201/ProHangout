@@ -54,3 +54,7 @@ Config:
         sock = new Socket("172.104.63.169", 4444);
         thành sock = new Socket("localhost", 4444);
 -   Lưu ý: có thể thay port socket bằng port khác, mình sử dụng port 2222 và 4444, bạn có thể thay bằng port tùy ý nhưng hãy đảm bảo trên Client và Server phải cùng 1 port kết nối.
+
+## TodoList
+
+- Kết nối tới Database sử dụng API
