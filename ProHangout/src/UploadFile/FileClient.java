@@ -35,7 +35,7 @@ public class FileClient extends JFrame {
 
     public FileClient() throws IOException {
         try {
-            sock = new Socket("172.104.63.169", 4444);
+            sock = new Socket("localhost", 4444);
             stdin = new BufferedReader(new InputStreamReader(System.in));
         } catch (Exception e) {
             System.err.println("Cannot connect to the server, try again later.");

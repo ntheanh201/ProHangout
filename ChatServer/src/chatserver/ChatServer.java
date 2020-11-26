@@ -23,8 +23,7 @@ public class ChatServer {
         }
 
         /*
-         * Open a server socket on the portNumber (default 2222). Note that we can
-         * not choose a port less than 1023 if we are not privileged users (root).
+         * Open a server socket on the portNumber default 2222
          */
         try {
             serverSocket = new ServerSocket(portNumber);

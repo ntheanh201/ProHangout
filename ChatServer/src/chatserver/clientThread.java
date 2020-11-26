@@ -46,13 +46,10 @@ public class clientThread extends Thread{
             InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream(), "UTF-8");
             BufferedReader br = new BufferedReader(isr);
 
-            String line1, line = "";
+            String line = "";
 
             /* Start the conversation. */
             while (true) {
-//                while((line1 = br.readLine()) != null){
-//                    line += (line1);
-//                }
                 line = br.readLine();
                 if (line.startsWith("/quit")) {
                     break;
@@ -81,7 +78,6 @@ public class clientThread extends Thread{
                         }
                     }
                 } else {
-                    /* The message is public, broadcast it to all other clients. */
                     synchronized (this) {
                         for (int i = 0; i < maxClientsCount; i++) {
                             if (threads[i] != null && threads[i].clientName != null) {
