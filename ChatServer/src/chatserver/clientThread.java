@@ -51,6 +51,11 @@ public class clientThread extends Thread{
             /* Start the conversation. */
             while (true) {
                 line = br.readLine();
+
+                // check line = null
+                if(line == null) {
+                    break;
+                }
                 if (line.startsWith("/quit")) {
                     break;
                 }
