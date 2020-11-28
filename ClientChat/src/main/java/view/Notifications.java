@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Notifications extends JFrame {
     public Notifications() {
@@ -25,11 +26,13 @@ public class Notifications extends JFrame {
         constraints.fill = GridBagConstraints.BOTH;
         JLabel headingLabel = new JLabel(header);
         try {
-            File file = new File("chat.png");
-            FileInputStream fis = new FileInputStream(file);
-            BufferedImage sendImg = ImageIO.read(fis);
-//            Image sendImg = ImageIO.read(getClass().getResource("chat.png"));
-            headingLabel.setIcon(new ImageIcon(sendImg));
+
+//            File file = new File("chat.png");
+//            FileInputStream fis = new FileInputStream(file);
+//            BufferedImage sendImg = ImageIO.read(fis);
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/chat.png");
+            ImageIcon sendImg= new ImageIcon(ImageIO.read(path));
+            headingLabel.setIcon(sendImg);
         } catch (IOException e) {
             System.out.println("error");
         }

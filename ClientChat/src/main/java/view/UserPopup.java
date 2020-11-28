@@ -2,8 +2,11 @@ package view;
 
 import model.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UserPopup extends JFrame {
     private JPanel jPanel;
@@ -12,7 +15,7 @@ public class UserPopup extends JFrame {
     private JLabel usernameLabel;
     User username = new User();
 
-    public UserPopup(){
+    public UserPopup() throws IOException {
         this.setLayout(null);
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
@@ -38,9 +41,10 @@ public class UserPopup extends JFrame {
         this.add(jPanel);
     }
 
-    public void setjLabel(){
+    public void setjLabel() throws IOException {
         jLabel = new JLabel();
-        ImageIcon imgThisImg = new ImageIcon("resource/images/kinn.jpg");
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/kinn.jpg");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         jLabel.setIcon(imgThisImg);
         jLabel.setBounds(65, 40, 260, 260);
         jPanel.add(jLabel);

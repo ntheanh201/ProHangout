@@ -1,7 +1,10 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class EmojiGuide extends JFrame {
     private JPanel jPanel;
@@ -9,7 +12,7 @@ public class EmojiGuide extends JFrame {
     private JLabel moreInfor;
     private JLabel usernameLabel;
 
-    public EmojiGuide(){
+    public EmojiGuide() throws IOException {
         this.setLayout(null);
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
@@ -42,17 +45,19 @@ public class EmojiGuide extends JFrame {
         jPanel.add(moreInfor, BorderLayout.CENTER);
     }
 
-    public void setjLabel() {
-        ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+    public void setjLabel() throws IOException {
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         jLabel = new JLabel();
         jLabel.setIcon(imgThisImg);
         jLabel.setBounds(50, 20, 300, 80);
         jPanel.add(jLabel);
     }
 
-    public void setUsernameLabel(){
+    public void setUsernameLabel() throws IOException {
         usernameLabel = new JLabel();
-        ImageIcon imgThisImg = new ImageIcon("resource/images/guide.png");
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/guide.png");
+        ImageIcon imgThisImg = new ImageIcon(ImageIO.read(path));
         usernameLabel.setIcon(imgThisImg);
         usernameLabel.setBounds(0, 170, 400, 300);
 

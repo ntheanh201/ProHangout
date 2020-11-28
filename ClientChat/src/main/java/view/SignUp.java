@@ -55,9 +55,7 @@ public class SignUp extends JFrame {
             if (resultSet.next()) {
                 isExistUser = true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -69,7 +67,6 @@ public class SignUp extends JFrame {
         try {
             InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/hangouts.png");
             Image sendImg = ImageIO.read(path);
-//            BufferedImage sendImg = ImageIO.read(getClass().getResource("hangouts.png"));
             this.setIconImage(sendImg);
         } catch (IOException e){
             System.out.println("error");
@@ -204,11 +201,7 @@ public class SignUp extends JFrame {
                     dispose();
                     new Login();
 
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                } catch (ClassNotFoundException e1) {
-                    e1.printStackTrace();
-                } catch (IOException e1) {
+                } catch (SQLException | ClassNotFoundException | IOException e1) {
                     e1.printStackTrace();
                 }
             }

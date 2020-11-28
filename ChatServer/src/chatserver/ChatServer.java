@@ -1,5 +1,7 @@
 package chatserver;
 
+import utils.PortConfig;
+
 import java.io.PrintStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -7,19 +9,18 @@ import java.net.ServerSocket;
 
 public class ChatServer {
     private static ServerSocket serverSocket = null;
-    private static Socket clientSocket = null;
 
     private static final int maxClientsCount = 100;
     private static final clientThread[] threads = new clientThread[maxClientsCount];
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
-        int portNumber = 2222;
+        int portNumber = PortConfig.chatPort;
         if (args.length < 1) {
             System.out.println("Usage: java MultiThreadChatServerSync <portNumber>\n"
                     + "Now using port number = " + portNumber);
         } else {
-            portNumber = Integer.valueOf(args[0]).intValue();
+            portNumber = Integer.parseInt(args[0]);
         }
 
         /*
@@ -27,9 +28,7 @@ public class ChatServer {
          */
         try {
             serverSocket = new ServerSocket(portNumber);
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             System.out.println(e);
         }
 
@@ -39,7 +38,7 @@ public class ChatServer {
          */
         while (true) {
             try {
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
                 int i = 0;
                 for (i = 0; i < maxClientsCount; i++) {
                     if (threads[i] == null) {
@@ -53,9 +52,7 @@ public class ChatServer {
                     os.close();
                     clientSocket.close();
                 }
-            } catch (IOException e) {
-                System.out.println(e);
-            } catch (NullPointerException e) {
+            } catch (IOException | NullPointerException e) {
                 System.out.println(e);
             }
         }

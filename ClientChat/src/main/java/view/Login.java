@@ -92,10 +92,12 @@ public class Login extends JFrame {
         jPanel.add(jPanelLogin);
     }
 
-    public void setLoginLabel(){
+    public void setLoginLabel() throws IOException {
         loginLabel = new JLabel();
         loginLabel.setBounds(85, 10, 300, 100);
-        ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
+
         loginLabel.setIcon(imgThisImg);
         loginLabel.setFont(new Font("Courier New", Font.BOLD, 40));
 
@@ -153,11 +155,7 @@ public class Login extends JFrame {
                     JOptionPane.showMessageDialog(null, "Incorrect Username Or Password", "Login Failed", 2);
                 }
 
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
+            } catch (SQLException | ClassNotFoundException | IOException e1) {
                 e1.printStackTrace();
             }
         }
@@ -194,7 +192,7 @@ public class Login extends JFrame {
 
     public void setLoginButton() {
         loginButton = new JButton();
-        loginLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         loginButton.setText("SIGN UP");
         loginButton.setForeground(Color.decode("#4580c2"));
         loginButton.setBounds(x + 270, 425, 100, 30);

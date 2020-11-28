@@ -2,10 +2,12 @@ package view;
 
 import model.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class EditInformation extends JFrame {
@@ -15,7 +17,7 @@ public class EditInformation extends JFrame {
     private JLabel label;
     User username = new User();
 
-    public EditInformation(){
+    public EditInformation() throws IOException {
         this.setLayout(null);
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
@@ -39,8 +41,9 @@ public class EditInformation extends JFrame {
         this.add(jPanel);
     }
 
-    public void setLabel() {
-        ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+    public void setLabel() throws IOException {
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         label = new JLabel();
         label.setIcon(imgThisImg);
         label.setBounds(50, 20, 300, 80);
@@ -73,7 +76,11 @@ public class EditInformation extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new ChangePassword();
+                try {
+                    new ChangePassword();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         jPanel.add(changePasswordButton);

@@ -1,7 +1,9 @@
 package view;
 
 import model.User;
+import utils.ServerIP;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +36,7 @@ public class AvatarClient extends JFrame {
 
     public AvatarClient() throws IOException {
         try {
-            sock = new Socket("localhost", 4444);
+            sock = new Socket(ServerIP.server, ServerIP.avatarPort);
             stdin = new BufferedReader(new InputStreamReader(System.in));
         } catch (Exception e) {
             System.err.println("Cannot connect to the server, try again later.");
@@ -71,8 +73,9 @@ public class AvatarClient extends JFrame {
         this.add(jPanel);
     }
 
-    public void setjLabel() {
-        ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+    public void setjLabel() throws IOException {
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         jLabel = new JLabel();
         jLabel.setIcon(imgThisImg);
         jLabel.setBounds(50, 20, 300, 80);

@@ -3,9 +3,12 @@ package view;
 import utils.ConnectDB;
 import model.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,7 +24,7 @@ public class ChangePassword extends JFrame {
     User username = new User();
     private int x = 10;
 
-    public ChangePassword() {
+    public ChangePassword() throws IOException {
         this.setLayout(null);
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
@@ -49,8 +52,9 @@ public class ChangePassword extends JFrame {
         this.add(jPanel);
     }
 
-    public void setLabel() {
-        ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+    public void setLabel() throws IOException {
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         label = new JLabel();
         label.setIcon(imgThisImg);
         label.setBounds(50, 20, 300, 80);
@@ -95,16 +99,14 @@ public class ChangePassword extends JFrame {
             } else {
                 try {
                     Connection connection = ConnectDB.getMySQLConnection();
-                    PreparedStatement Pstatement = connection.prepareStatement("update users set password=? where username=?");
+                    PreparedStatement Pstatement = connection.prepareStatement("UPDATE users SET password=? WHERE username=?");
                     Pstatement.setString(1, String.valueOf(newPassword.getPassword()));
                     Pstatement.setString(2, username.getUsername());
                     Pstatement.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Password update successfully!");
                     dispose();
 
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                } catch (ClassNotFoundException e1) {
+                } catch (SQLException | ClassNotFoundException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -132,7 +134,7 @@ public class ChangePassword extends JFrame {
         jPanel.add(confirm);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new ChangePassword();
     }
 }

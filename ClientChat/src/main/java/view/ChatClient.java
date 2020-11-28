@@ -2,6 +2,7 @@ package view;
 
 import model.User;
 import utils.ScreenResolution;
+import utils.ServerIP;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -104,8 +105,8 @@ public class ChatClient {
         private JLabel exitLabel;
         ScreenResolution screenResolution = new ScreenResolution();
 
-//        Image img2 = ImageIO.read(ChatClient.class.getResource("background.jpg"));
-        Image img2 = null;
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/background.jpg");
+        Image img2 = ImageIO.read(path);
 
         public ChatFrame(ChatAccess chatAccess) throws IOException {
             this.chatAccess = chatAccess;
@@ -116,7 +117,7 @@ public class ChatClient {
         /**
          * Builds the user interface
          */
-        private void buildGUI() {
+        private void buildGUI() throws IOException {
             jPanel = new JPanel() {
                 @Override
                 protected void paintComponent(Graphics g) {
@@ -137,7 +138,7 @@ public class ChatClient {
             this.repaint();
         }
 
-        public void buildJPanelSide() {
+        public void buildJPanelSide() throws IOException {
             jPanelSide = new JPanel() {
                 @Override
                 protected void paintComponent(Graphics grphcs) {
@@ -168,9 +169,10 @@ public class ChatClient {
 
         }
 
-        public void setEmojiLabel(){
+        public void setEmojiLabel() throws IOException {
             emojiLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon("resource/images/emoji.png");
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/emoji.png");
+            ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
             emojiLabel.setIcon(imgThisImg);
             emojiLabel.setBounds(32, screenResolution.getHeight() - 160, 32, 32);
             emojiLabel.setToolTipText("Emoji for ProHangout");
@@ -183,7 +185,11 @@ public class ChatClient {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    new EmojiGuide();
+                    try {
+                        new EmojiGuide();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -204,9 +210,10 @@ public class ChatClient {
             jPanelSide.add(emojiLabel);
         }
 
-        public void setExit() {
+        public void setExit() throws IOException {
             exitLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon("resource/images/door.png");
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/door.png");
+            ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
             exitLabel.setIcon(imgThisImg);
             exitLabel.setToolTipText("Exit");
             exitLabel.setBounds(32, screenResolution.getHeight() - 60, 32, 32);
@@ -255,17 +262,20 @@ public class ChatClient {
             return dimg;
         }
 
-        public void setUsernameLabel() {
+        public void setUsernameLabel() throws IOException {
             usernameLabel = new JLabel();
 
-            User username = new User();
+            User user = new User();
             ImageIcon imgThisImg;
             try {
-                BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + username.getUsername() + ".png")));
+//                BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + user.getUsername() + ".png")));
+                InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
+                BufferedImage img = ImageIO.read(path);
                 BufferedImage bufferedImage = resize((img), 64, 64);
                 imgThisImg = new ImageIcon(bufferedImage);
             } catch (Exception e){
-                imgThisImg = new ImageIcon("resource/images/user.png");
+                InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/user.png");
+                imgThisImg= new ImageIcon(ImageIO.read(path));
             }
 
             usernameLabel.setBounds(18, 18, 64, 64);
@@ -282,8 +292,6 @@ public class ChatClient {
                 public void mousePressed(MouseEvent e) {
                     try {
                         new UsernameInformation();
-                    } catch (MalformedURLException e1) {
-                        e1.printStackTrace();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
@@ -308,9 +316,10 @@ public class ChatClient {
             jPanelSide.add(usernameLabel);
         }
 
-        public void setSettingsLabel() {
+        public void setSettingsLabel() throws IOException {
             settingsLabel = new JLabel();
-            ImageIcon imgThisImg = new ImageIcon("resource/images/settings.png");
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/settings.png");
+            ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
             settingsLabel.setBounds(32, screenResolution.getHeight() - 110, 32, 32);
             settingsLabel.setToolTipText("About Author");
             settingsLabel.setIcon(imgThisImg);
@@ -323,7 +332,11 @@ public class ChatClient {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    new UserPopup();
+                    try {
+                        new UserPopup();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -344,15 +357,16 @@ public class ChatClient {
             jPanelSide.add(settingsLabel);
         }
 
-        public void setFlowerLabel() {
+        public void setFlowerLabel() throws IOException {
             flowerLabel = new JLabel("", JLabel.CENTER);
-            ImageIcon imgThisImg = new ImageIcon("resource/images/label.png");
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/label.png");
+            ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
             flowerLabel.setIcon(imgThisImg);
             flowerLabel.setBounds(300, 0, 300, 80);
             jPanel.add(flowerLabel);
         }
 
-        public void chatGUI() {
+        public void chatGUI() throws IOException {
 
             textPane = new JTextPane();
             textPane.setEditable(false);
@@ -424,44 +438,45 @@ public class ChatClient {
             }
         }
 
-        public void addIcon(JTextPane pane, String text) {
-            ImageIcon imgThisImg;
+        public void addIcon(JTextPane pane, String text) throws IOException {
+            InputStream path;
             if (text.equals(":3")) {
-                imgThisImg = new ImageIcon("resource/icons/cat.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/cat.png");
             } else if (text.equals(":v")) {
-                imgThisImg = new ImageIcon("resource/icons/pacman.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/pacman.png");
             } else if (text.equals(":)")) {
-                imgThisImg = new ImageIcon("resource/icons/smiley.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/smiley.png");
             } else if (text.equals(":(")) {
-                imgThisImg = new ImageIcon("resource/icons/cry.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/cry.png");
             } else if (text.equals("o.O")) {
-                imgThisImg = new ImageIcon("resource/icons/oO.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/oO.png");
             } else if (text.equals(":poop:")) {
-                imgThisImg = new ImageIcon("resource/icons/poop.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/poop.png");
             } else if (text.equals("(^^^)")) {
-                imgThisImg = new ImageIcon("resource/icons/shark.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/shark.png");
             } else if (text.equals("-_-")) {
-                imgThisImg = new ImageIcon("resource/icons/squint.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/squint.png");
             } else if (text.equals("<(')")) {
-                imgThisImg = new ImageIcon("resource/icons/penguine.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/penguine.png");
             } else if (text.equals("><")) {
-                imgThisImg = new ImageIcon("resource/icons/mean.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/mean.png");
             } else if (text.equals(":kiss:")) {
-                imgThisImg = new ImageIcon("resource/icons/kiss.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/kiss.png");
             } else if (text.equals("(y)")) {
-                imgThisImg = new ImageIcon("resource/icons/like.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/like.png");
             } else if (text.equals(":love:")) {
-                imgThisImg = new ImageIcon("resource/icons/love.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/love.png");
             } else if (text.equals("<3")) {
-                imgThisImg = new ImageIcon("resource/icons/heart.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/heart.png");
             } else if (text.equals(":crysmiley:")) {
-                imgThisImg = new ImageIcon("resource/icons/khoc_cuoi.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/khoc_cuoi.png");
             } else if (text.equals(":nervous:")) {
-                imgThisImg = new ImageIcon("resource/icons/nervous.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/nervous.png");
             }
             else{
-                imgThisImg = new ImageIcon("resource/icons/khoc_cuoi.png");
+                path = this.getClass().getClassLoader().getResourceAsStream("icons/khoc_cuoi.png");
             }
+            ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
             pane.insertIcon(imgThisImg);
         }
 
@@ -473,14 +488,14 @@ public class ChatClient {
                     String line = finalArg.toString();
 
                     String separate = line, text="";
-                    int check = 0;
+                    boolean isEmoji = false;
                     String[] words = separate.split(" ");
                     for (int i = 0; i < words.length; i++) {
                         if (words[i].equals("Ω:v") || words[i].equals(":3") || words[i].equals(":)") || words[i].equals(":(") || words[i].equals("o.O") || words[i].equals(":poop:")
                                 || words[i].equals("(^^^)") || words[i].equals("-_-") || words[i].equals("<(')") || words[i].equals("><") || words[i].equals(":kiss:") || words[i].equals("(y)")
                                 || words[i].equals(":love:") || words[i].equals("<3") || words[i].equals(":crysmiley:") || words[i].equals(":nervous:")
                         ) {
-                            check = 1;
+                            isEmoji = true;
                             text = words[i];
                             words[i] = "";
                         }
@@ -499,8 +514,12 @@ public class ChatClient {
                         new Notifications();
                     }
 
-                    if (check == 1) {
-                        addIcon(textPane, text);
+                    if (isEmoji) {
+                        try {
+                            addIcon(textPane, text);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     addColoredText(textPane, "\n", Color.red);
 
@@ -509,19 +528,16 @@ public class ChatClient {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         String server = args[0];
-        int port = 2222;
+        int port = ServerIP.chatPort;
         ChatAccess access = new ChatAccess();
 
         JFrame frame = new ChatFrame(access);
 
         try {
-            File file = new File("hangouts.png");
-            FileInputStream fis = new FileInputStream(file);
-            BufferedImage sendImg = ImageIO.read(fis);
-
-//            BufferedImage sendImg = ImageIO.read(ChatClient.class.getResource("hangouts.png"));
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/hangouts.png");
+            BufferedImage sendImg = ImageIO.read(path);
             frame.setIconImage(sendImg);
         } catch (IOException e) {
             System.out.println("Error");

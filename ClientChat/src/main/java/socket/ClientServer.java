@@ -1,5 +1,6 @@
 package socket;
 
+import utils.ServerIP;
 import view.ChatClient;
 
 import java.io.IOException;
@@ -7,9 +8,7 @@ import java.io.IOException;
 public class ClientServer {
 
     public ClientServer() throws IOException {
-        String IPServer = "localhost";
-//        String IPServer = "172.104.63.169";
-        String[] arguments = new String[] {IPServer};
+        String[] arguments = new String[] {ServerIP.server};
         new ChatClient().main(arguments);
     }
 

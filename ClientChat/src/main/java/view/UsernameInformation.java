@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 public class UsernameInformation extends JFrame {
@@ -57,16 +58,19 @@ public class UsernameInformation extends JFrame {
 
     public void setjLabel() throws IOException {
         jLabel = new JLabel();
-        User username = new User();
+        User user = new User();
         ImageIcon imgThisImg;
         try {
-            BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + username.getUsername() + ".png")));
+//            BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + user.getUsername() + ".png")));
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
+            BufferedImage img = ImageIO.read(path);
             BufferedImage bufferedImage = resize((img), 256, 256);
 
             //        URL url = new URL(("http://s2bzen.me/theanhdz/images/"+username.getUsername()+".png"));
             imgThisImg = new ImageIcon(bufferedImage);
         } catch (Exception e){
-            imgThisImg = new ImageIcon("resource/images/avt.png");
+            InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/avt.png");
+            imgThisImg= new ImageIcon(ImageIO.read(path));
         }
 
         jLabel.setIcon(imgThisImg);
@@ -81,13 +85,14 @@ public class UsernameInformation extends JFrame {
         jPanel.add(usernameLabel);
     }
 
-    public void setEditInfor(){
+    public void setEditInfor() throws IOException {
         editInfor = new JLabel();
-        ImageIcon imgThisImg = new ImageIcon("resource/images/edit.png");
+        InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/edit.png");
+        ImageIcon imgThisImg= new ImageIcon(ImageIO.read(path));
         editInfor = new JLabel();
         editInfor.setIcon(imgThisImg);
-        editInfor.setBounds(75, jPanel.getHeight()-70, 400, 50);
-        editInfor.setText("Edit Information");
+        editInfor.setBounds(100, jPanel.getHeight()-70, 400, 50);
+        editInfor.setText("Edit Profile");
         editInfor.setFont(new Font("Tahoma", Font.BOLD, 24));
         editInfor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         editInfor.addMouseListener(new MouseListener() {
@@ -99,7 +104,11 @@ public class UsernameInformation extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 dispose();
-                new EditInformation();
+                try {
+                    new EditInformation();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
 
             @Override

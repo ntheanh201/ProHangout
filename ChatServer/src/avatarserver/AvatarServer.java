@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package avatarserver;
 
 /**
@@ -10,20 +5,20 @@ package avatarserver;
  * @author ntheanh201
  */
 
-import java.io.IOException;
+import utils.PortConfig;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class AvatarServer {
 
     private static ServerSocket serverSocket;
-    private static Socket clientSocket = null;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         try {
-            serverSocket = new ServerSocket(4444);
-            System.out.println("Server started.");
+            serverSocket = new ServerSocket(PortConfig.avatarPort);
+            System.out.println("Server started.\n" + "AvatarServer using port number = " + PortConfig.avatarPort);
         } catch (Exception e) {
             System.err.println("Port already in use.");
             System.exit(1);
@@ -31,7 +26,7 @@ public class AvatarServer {
 
         while (true) {
             try {
-                clientSocket = serverSocket.accept();
+                Socket clientSocket = serverSocket.accept();
 //                System.out.println(clientSocket.getPort());
 //                System.out.println("Accepted connection : " + clientSocket);
                 Thread t = new Thread(new ClientConnection(clientSocket));
