@@ -9,7 +9,7 @@ public class ConnectDB {
     // Kết nối vào MySQL.
     public static Connection getMySQLConnection() throws SQLException,
             ClassNotFoundException {
-        String hostName = ServerIP.server;
+        String hostName = "localhost";
         String dbName = "network_prog_socket";
         String userName = "root";
         String password = "root";
