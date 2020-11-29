@@ -150,7 +150,7 @@ public class Login extends JFrame {
                     username.setUsername(usernameInput.getText());
                     username.setPassword(String.valueOf(jPasswordField.getPassword()));
                     dispose();
-                    new ClientServer();
+                    new ChatMain();
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect Username Or Password", "Login Failed", 2);
                 }

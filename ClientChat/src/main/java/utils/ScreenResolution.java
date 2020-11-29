@@ -12,6 +12,6 @@ public class ScreenResolution {
     }
 
     public int getHeight() {
-        return (int) (height*0.7);
+        return (int) (height*0.73);
     }
 }

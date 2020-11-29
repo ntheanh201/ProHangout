@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -62,8 +63,9 @@ public class UsernameInformation extends JFrame {
         ImageIcon imgThisImg;
         try {
 //            BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + user.getUsername() + ".png")));
-            InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
-            BufferedImage img = ImageIO.read(path);
+//            InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
+            String path = "/Users/macbook/Downloads/TheAnh/PTIT/NetworkProg/java-swing-prohangout/ClientChat/src/main/resources/avatars/" + user.getUsername() + ".png";
+            BufferedImage img = ImageIO.read(new File(path));
             BufferedImage bufferedImage = resize((img), 256, 256);
 
             //        URL url = new URL(("http://s2bzen.me/theanhdz/images/"+username.getUsername()+".png"));

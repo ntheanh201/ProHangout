@@ -1,15 +1,12 @@
-package socket;
+package view;
 
 import utils.ServerIP;
-import view.ChatClient;
 
 import java.io.IOException;
 
-public class ClientServer {
-
-    public ClientServer() throws IOException {
+public class ChatMain {
+    public ChatMain() throws IOException {
         String[] arguments = new String[] {ServerIP.server};
         new ChatClient().main(arguments);
     }
-
 }

@@ -1,6 +1,7 @@
 package view;
 
 import model.User;
+import socket.ChatAccess;
 import utils.ScreenResolution;
 import utils.ServerIP;
 
@@ -22,70 +23,6 @@ import java.util.Observer;
 
 
 public class ChatClient {
-
-    static class ChatAccess extends Observable {
-        private Socket socket;
-        private OutputStream outputStream;
-        private DataOutputStream dataOutputStream;
-        User user = new User();
-
-        @Override
-        public void notifyObservers(Object arg) {
-            super.setChanged();
-            super.notifyObservers(arg);
-        }
-
-        /**
-         * Create socket, and receiving thread
-         */
-        public void InitSocket(String server, int port) throws IOException {
-            socket = new Socket(server, port);
-            outputStream = socket.getOutputStream();
-
-            //truyen username len server
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeBytes(user.getUsername() + '\n');
-
-            Thread receivingThread = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        String line;
-                        while ((line = reader.readLine()) != null)
-                            notifyObservers(line);
-                    } catch (IOException ex) {
-                        notifyObservers(ex);
-                    }
-                }
-            };
-            receivingThread.start();
-        }
-
-        private static final String CRLF = "\r\n"; // newline
-
-        /**
-         * Send a line of text
-         */
-        public void send(String text) {
-            try {
-                outputStream.write((text + CRLF).getBytes("UTF-8"));
-                outputStream.flush();
-            } catch (IOException ex) {
-                notifyObservers(ex);
-            }
-        }
-
-        public void close() {
-            try {
-                socket.close();
-            } catch (IOException ex) {
-                notifyObservers(ex);
-            }
-        }
-    }
-
     /**
      * Chat client UI
      */
@@ -269,8 +206,9 @@ public class ChatClient {
             ImageIcon imgThisImg;
             try {
 //                BufferedImage img = ImageIO.read(new URL(("http://s2bzen.me/theanhdz/images/" + user.getUsername() + ".png")));
-                InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
-                BufferedImage img = ImageIO.read(path);
+//                InputStream path = this.getClass().getClassLoader().getResourceAsStream("avatars/" + user.getUsername() + ".png");
+                String path = "/Users/macbook/Downloads/TheAnh/PTIT/NetworkProg/java-swing-prohangout/ClientChat/src/main/resources/avatars/" + user.getUsername() + ".png";
+                BufferedImage img = ImageIO.read(new File(path));
                 BufferedImage bufferedImage = resize((img), 64, 64);
                 imgThisImg = new ImageIcon(bufferedImage);
             } catch (Exception e){
@@ -402,10 +340,8 @@ public class ChatClient {
             inputTextField.addActionListener(sendListener);
 
             try {
-                File file = new File("chat.png");
-                FileInputStream fis = new FileInputStream(file);
-                BufferedImage sendImg = ImageIO.read(fis);
-//                Image sendImg = ImageIO.read(getClass().getResource("chat.png"));
+                InputStream path = this.getClass().getClassLoader().getResourceAsStream("images/chat.png");
+                BufferedImage sendImg = ImageIO.read(path);
                 sendButton.setIcon(new ImageIcon(sendImg));
             } catch (IOException e) {
                 System.out.println("error");
